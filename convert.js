@@ -11,14 +11,17 @@ var processMeasurement = function(measurements,needle) {
     measurements.forEach(function(iMeasurement) {
         if(iMeasurement.parameter == needle) {
             oMeasurement = [];
-            time = iMeasurement.time[0] + iMeasurement.time[1] + iMeasurement.time[3] + iMeasurement.time[4];
-            time = parseInt(time);
+            time = convertTime(iMeasurement.time);
             oMeasurement.push(time);
             oMeasurement.push(iMeasurement.value);
             output.push(oMeasurement); 
         } 
     });
     return output;
+}
+
+var convertTime = function(hours) {
+    return 600 * parseInt(hours[0]) + 60 * parseInt(hours[1]) + 10 * parseInt(hours[3]) + parseInt(hours[4]);
 }
 
 
@@ -38,5 +41,4 @@ iPatients.forEach(function(iPatient) {
     oPatients.push(oPatient); 
 });
 
-//console.log(oPatients);
 console.log(JSON.stringify(oPatients, null, 4));

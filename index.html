@@ -258,7 +258,7 @@ d3.json("NewCommons.json", function(parliment) {
   // After the transition finishes, you can mouseover to change the time.
   function enableInteraction() {
     var timeScale = d3.scale.linear()
-        .domain([0, 4800])
+        .domain([0, 2880])
         .range([box.x + 10, box.x + box.width - 10])
         .clamp(true);
 
@@ -287,7 +287,7 @@ d3.json("NewCommons.json", function(parliment) {
   // Tweens the entire chart by first tweening the time, and then the data.
   // For the interpolated data, the dots and label are redrawn.
   function tweentime() {
-    var time = d3.interpolateNumber(0, 4800);
+    var time = d3.interpolateNumber(0, 2880);
     return function(t) { displaytime(time(t)); };
   }
 
