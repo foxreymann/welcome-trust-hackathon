@@ -15,11 +15,18 @@ iPatients.forEach(function(iPatient) {
 
     nimap = [];
 
-    iPatient.measurements.forEach(function(measurement) {
-        console.log(measurement); 
+    iPatient.measurements.forEach(function(iMeasurement) {
+        if(iMeasurement.parameter == 'NIMAP') {
+            oMeasurement = [];
+            oMeasurement.push(iMeasurement.time);
+            oMeasurement.push(iMeasurement.value);
+            nimap.push(oMeasurement); 
+        } 
     });
+    oPatient.nimap = nimap;
 
     oPatients.push(oPatient); 
 });
 
-console.log(oPatients);
+//console.log(oPatients);
+console.log(JSON.stringify(oPatients, null, 4));
