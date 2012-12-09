@@ -258,7 +258,7 @@ d3.json("NewCommons.json", function(parliment) {
   // After the transition finishes, you can mouseover to change the time.
   function enableInteraction() {
     var timeScale = d3.scale.linear()
-        .domain([1970, 2012])
+        .domain([0, 4800])
         .range([box.x + 10, box.x + box.width - 10])
         .clamp(true);
 
@@ -287,7 +287,7 @@ d3.json("NewCommons.json", function(parliment) {
   // Tweens the entire chart by first tweening the time, and then the data.
   // For the interpolated data, the dots and label are redrawn.
   function tweentime() {
-    var time = d3.interpolateNumber(1970, 2012);
+    var time = d3.interpolateNumber(0, 4800);
     return function(t) { displaytime(time(t)); };
   }
 
@@ -301,11 +301,11 @@ d3.json("NewCommons.json", function(parliment) {
   function interpolateData(time) {
     return parliment.map(function(d) {
       return {
-        name: d.party,
-        region: d.party,
-		population: interpolateValues(d.Total, time),
-        income: interpolateValues(d.Femalepercent, time),
-        lifeExpectancy: interpolateValues(d.averageAge, time)
+        name: d.id,
+        region: d.id,
+		population: interpolateValues(d.temp, time),
+        income: interpolateValues(d.nimap, time),
+        lifeExpectancy: interpolateValues(d.hr, time)
       };
     });
   }
