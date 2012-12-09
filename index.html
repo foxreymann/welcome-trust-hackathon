@@ -146,13 +146,13 @@ function color(d) { return d.region; }
 function key(d) { return d.name; }
 
 // Chart dimensions.
-var margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 39.5},
+var margin = {top: 19.5, right: 19.5, bottom: 29.5, left: 39.5},
     width = 1024 - margin.right,
     height = 640 - margin.top - margin.bottom;
 
 // Various scales. These domains make assumptions of data, naturally.
 //var xScale = d3.scale.log().domain([0, 1e5]).range([0, width]),
-var xScale = d3.scale.linear().domain([50, 100]).range([0, width]),  
+var xScale = d3.scale.linear().domain([50, 110]).range([0, width]),  
   	yScale = d3.scale.linear().domain([60, 100]).range([height, 0]),
     radiusScale = d3.scale.sqrt().domain([35, 43]).range([0, 100]),
     colorScale = d3.scale.category10();
@@ -258,7 +258,7 @@ d3.json("NewCommons.json", function(parliment) {
   // After the transition finishes, you can mouseover to change the time.
   function enableInteraction() {
     var timeScale = d3.scale.linear()
-        .domain([0, 2880])
+        .domain([0, 48*60])
         .range([box.x + 10, box.x + box.width - 10])
         .clamp(true);
 
@@ -287,7 +287,7 @@ d3.json("NewCommons.json", function(parliment) {
   // Tweens the entire chart by first tweening the time, and then the data.
   // For the interpolated data, the dots and label are redrawn.
   function tweentime() {
-    var time = d3.interpolateNumber(0, 2880);
+    var time = d3.interpolateNumber(0, 48*60);
     return function(t) { displaytime(time(t)); };
   }
 
@@ -303,7 +303,7 @@ d3.json("NewCommons.json", function(parliment) {
       return {
         name: d.id,
         region: d.id,
-		population: interpolateValues(d.temp, time),
+		    population: interpolateValues(d.temp, time),
         income: interpolateValues(d.nimap, time),
         lifeExpectancy: interpolateValues(d.hr, time)
       };
@@ -325,11 +325,4 @@ d3.json("NewCommons.json", function(parliment) {
 
 </script>
 
-<footer>
-<a href="NewLordsChart.html" class="large btn"><span class="icn icnList">House of Lords</span></a>
-
-<a href="http://www.maxbye.com"><img  style="position:fixed; margin-left:525px;" src="maxbye.png" width="230" height="45" alt="some_text"></img></a>
-<a href="ttp://www.672hours.com/"><img style="position:fixed; margin-left:320px;" src="672.png" width="200" alt="some_text"></img></a>
-<a href="http://shkspr.mobi/blog/"><img style="position:fixed; margin-left:80px;" src="terrence.png" width="230" alt="some_text"></img></a>
-</footer>
 </body></html>
