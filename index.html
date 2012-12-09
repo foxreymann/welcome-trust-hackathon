@@ -152,8 +152,8 @@ var margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 39.5},
 
 // Various scales. These domains make assumptions of data, naturally.
 //var xScale = d3.scale.log().domain([0, 1e5]).range([0, width]),
-var xScale = d3.scale.log().domain([1, 55]).range([0, width]),  
-  	yScale = d3.scale.linear().domain([40, 70]).range([height, 0]),
+var xScale = d3.scale.linear().domain([0, 180]).range([0, width]),  
+  	yScale = d3.scale.linear().domain([0, 180]).range([height, 0]),
     radiusScale = d3.scale.sqrt().domain([0, 5e2]).range([0, 100]),
     colorScale = d3.scale.category10();
 
@@ -185,7 +185,7 @@ svg.append("text")
     .attr("text-anchor", "end")
     .attr("x", width)
     .attr("y", height - 6)
-    .text("Gender Parity (Females)");
+    .text("Blood pressure (mmHg)");
 
 // Add a y-axis label.
 svg.append("text")
@@ -194,7 +194,7 @@ svg.append("text")
     .attr("y", 6)
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
-    .text("Age (times)");
+    .text("Heart rate (bpm)");
 
 // Add the time label; the value is set on transition.
 var label = svg.append("text")
@@ -202,7 +202,7 @@ var label = svg.append("text")
     .attr("text-anchor", "end")
     .attr("y", height - 24)
     .attr("x", width)
-    .text(1970);
+    .text("00:00");
 
 // Load the data.
 d3.json("NewCommons.json", function(parliment) {
