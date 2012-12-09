@@ -12,8 +12,7 @@
   height: 506px;
 }
 
-p {
-
+#p-chart-background {
   background-image:url('parliament.jpg');
   background-position:40px 19px;   
   background-size:1000px 602px;
@@ -23,7 +22,7 @@ p {
 
 
 text {
-  font: 10px sans-serif;
+  font: 18px sans-serif;
 }
 
 .dot {
@@ -40,13 +39,13 @@ text {
   fill: #777;
 }
 
-.year.label {
+.time.label {
   font: 500 196px "Helvetica Neue";
 
   fill: #ddd;
 }
 
-.year.label.active {
+.time.label.active {
   fill: #aaa;
 }
 
@@ -124,9 +123,9 @@ input[type=submit].active{
 </head><body>
 
 <header>
-<h2 style="font-family: 'Arial', 'Helvetica', sans-serif;
+<h2 style="font-family: sans-serif;
 text-shadow: 4px 4px 4px #aaa;
-font-size: 50px;
+font-size: 10px;
 margin: 0 0 0 30px;
 color: #333;"> 
 Intensive Care (HR, NIMAP, Temp)
@@ -195,11 +194,11 @@ svg.append("text")
     .attr("y", 6)
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
-    .text("Age (years)");
+    .text("Age (times)");
 
-// Add the year label; the value is set on transition.
+// Add the time label; the value is set on transition.
 var label = svg.append("text")
-    .attr("class", "year label")
+    .attr("class", "time label")
     .attr("text-anchor", "end")
     .attr("y", height - 24)
     .attr("x", width)
@@ -226,7 +225,7 @@ d3.json("NewCommons.json", function(parliment) {
   dot.append("title")
       .text(function(d) { return d.name; });
 
-  // Add an overlay for the year label.
+  // Add an overlay for the time label.
   var box = label.node().getBBox();
 
   var overlay = svg.append("rect")
@@ -237,11 +236,11 @@ d3.json("NewCommons.json", function(parliment) {
         .attr("height", box.height)
         .on("mouseover", enableInteraction);
 
-  // Start a transition that interpolates the data based on year.
+  // Start a transition that interpolates the data based on time.
   svg.transition()
       .duration(30000)
       .ease("linear")
-      .tween("year", tweenYear)
+      .tween("time", tweentime)
       .each("end", enableInteraction);
 
   // Positions the dots based on data.
@@ -256,9 +255,9 @@ d3.json("NewCommons.json", function(parliment) {
     return radius(b) - radius(a);
   }
 
-  // After the transition finishes, you can mouseover to change the year.
+  // After the transition finishes, you can mouseover to change the time.
   function enableInteraction() {
-    var yearScale = d3.scale.linear()
+    var timeScale = d3.scale.linear()
         .domain([1970, 2012])
         .range([box.x + 10, box.x + box.width - 10])
         .clamp(true);
@@ -281,43 +280,43 @@ d3.json("NewCommons.json", function(parliment) {
     }
 
     function mousemove() {
-      displayYear(yearScale.invert(d3.mouse(this)[0]));
+      displaytime(timeScale.invert(d3.mouse(this)[0]));
     }
   }
 
-  // Tweens the entire chart by first tweening the year, and then the data.
+  // Tweens the entire chart by first tweening the time, and then the data.
   // For the interpolated data, the dots and label are redrawn.
-  function tweenYear() {
-    var year = d3.interpolateNumber(1970, 2012);
-    return function(t) { displayYear(year(t)); };
+  function tweentime() {
+    var time = d3.interpolateNumber(1970, 2012);
+    return function(t) { displaytime(time(t)); };
   }
 
-  // Updates the display to show the specified year.
-  function displayYear(year) {
-    dot.data(interpolateData(year), key).call(position).sort(order);
-    label.text(Math.round(year));
+  // Updates the display to show the specified time.
+  function displaytime(time) {
+    dot.data(interpolateData(time), key).call(position).sort(order);
+    label.text(Math.round(time));
   }
 
-  // Interpolates the dataset for the given (fractional) year.
-  function interpolateData(year) {
+  // Interpolates the dataset for the given (fractional) time.
+  function interpolateData(time) {
     return parliment.map(function(d) {
       return {
         name: d.party,
         region: d.party,
-		population: interpolateValues(d.Total, year),
-        income: interpolateValues(d.Femalepercent, year),
-        lifeExpectancy: interpolateValues(d.averageAge, year)
+		population: interpolateValues(d.Total, time),
+        income: interpolateValues(d.Femalepercent, time),
+        lifeExpectancy: interpolateValues(d.averageAge, time)
       };
     });
   }
 
-  // Finds (and possibly interpolates) the value for the specified year.
-  function interpolateValues(values, year) {
-    var i = bisect.left(values, year, 0, values.length - 1),
+  // Finds (and possibly interpolates) the value for the specified time.
+  function interpolateValues(values, time) {
+    var i = bisect.left(values, time, 0, values.length - 1),
         a = values[i];
     if (i > 0) {
       var b = values[i - 1],
-          t = (year - a[0]) / (b[0] - a[0]);
+          t = (time - a[0]) / (b[0] - a[0]);
       return a[1] * (1 - t) + b[1] * t;
     }
     return a[1];
