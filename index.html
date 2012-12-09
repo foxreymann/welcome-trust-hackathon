@@ -152,9 +152,9 @@ var margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 39.5},
 
 // Various scales. These domains make assumptions of data, naturally.
 //var xScale = d3.scale.log().domain([0, 1e5]).range([0, width]),
-var xScale = d3.scale.linear().domain([0, 180]).range([0, width]),  
-  	yScale = d3.scale.linear().domain([0, 180]).range([height, 0]),
-    radiusScale = d3.scale.sqrt().domain([0, 5e2]).range([0, 100]),
+var xScale = d3.scale.linear().domain([60, 100]).range([0, width]),  
+  	yScale = d3.scale.linear().domain([60, 100]).range([height, 0]),
+    radiusScale = d3.scale.sqrt().domain([20, 60]).range([0, 100]),
     colorScale = d3.scale.category10();
 
 // The x & y axes.
