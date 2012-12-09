@@ -30,6 +30,8 @@ iPatients.forEach(function(iPatient) {
     oPatient = {};
 
     oPatient.id = iPatient.id;
+    oPatient.icuType = iPatient.icuType;
+    oPatient.inHopsitalDeath = iPatient.inHospitalDeath;
 
     oPatient.nimap = processMeasurement(iPatient.measurements,'NIMAP');
     oPatient.hr = processMeasurement(iPatient.measurements,'HR');
