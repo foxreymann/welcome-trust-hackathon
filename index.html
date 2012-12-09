@@ -301,8 +301,8 @@ d3.json("NewCommons.json", function(parliment) {
   function interpolateData(time) {
     return parliment.map(function(d) {
       return {
-        name: d.id,
-        region: d.id,
+        name: "ICU" + d.icuType + (d.inHospitalDeath?" death":" survivor") + " #" + d.id,
+        region: d.icuType + 4*d.inHospitalDeath,
 		    population: interpolateValues(d.temp, time),
         income: interpolateValues(d.nimap, time),
         lifeExpectancy: interpolateValues(d.hr, time)
