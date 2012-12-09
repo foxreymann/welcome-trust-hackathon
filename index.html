@@ -228,6 +228,31 @@ d3.json("NewCommons.json", function(parliment) {
     .enter().append("circle")
       .attr("class", "dot")
         .style("fill", function(d) {
+            if(d.class == 1) {
+                return "#04f";
+            }
+            if(d.class == 2) {
+                return "#08f";
+            }
+            if(d.class == 3) {
+                return "#0af";
+            }
+            if(d.class == 4) {
+                return "#0cf";
+            }
+            if(d.class == 5) {
+                return "#f40";
+            }
+            if(d.class == 6) {
+                return "#f80";
+            }
+            if(d.class == 7) {
+                return "#fa0";
+            }
+            if(d.class == 8) {
+                return "#fc0";
+            }
+
            if(d.class > 4) {
              return "#f00"; 
             }
