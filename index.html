@@ -126,6 +126,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e0e0', end
 
 
 </style>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
 </head><body>
 
 <header>
@@ -143,6 +145,7 @@ Intensive Care (HR, NIMAP, Temp)
 
 <script src="d3.v2.js"></script>
 <script>
+$(document).ready(function() {
 
 // Various accessors that specify the four dimensions of data to visualize.
 function x(d) { return d.income; }
@@ -366,6 +369,7 @@ return a[1];
 }
 });
 
+});
 </script>
 
 <footer>
