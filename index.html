@@ -19,6 +19,13 @@
   background-repeat: no-repeat;
 }
 
+#5, #6, #7, #8  {
+    fill:#f00 !important;
+}
+#1, #2, #3, #4  {
+    fill:#00f !important;
+}
+
 
 
 text {
@@ -142,7 +149,10 @@ Intensive Care (HR, NIMAP, Temp)
 function x(d) { return d.income; }
 function y(d) { return d.lifeExpectancy; }
 function radius(d) { return d.population; }
-function color(d) { return d.region; }
+function color(d) { 
+    console.log(d.region);
+    return d.region;
+ }
 function key(d) { return d.name; }
 
 // Chart dimensions.
@@ -217,7 +227,13 @@ d3.json("NewCommons.json", function(parliment) {
       .data(interpolateData(19))
     .enter().append("circle")
       .attr("class", "dot")
-      .style("fill", function(d) { return colorScale(color(d)); })
+        .style("fill", function(d) {
+           if(d.class > 4) {
+             return "#f00"; 
+            }
+            return "#00f";
+        })
+      //.style("fill", function(d) { return colorScale(color(d)); })
       .call(position)
       .sort(order);
 
@@ -301,9 +317,12 @@ d3.json("NewCommons.json", function(parliment) {
   function interpolateData(time) {
     return parliment.map(function(d) {
       return {
-        name: "ICU" + d.icuType + (d.inHospitalDeath?" death":" survivor") + " #" + d.id,
-        region: d.icuType + 4*d.inHospitalDeath,
-		    population: interpolateValues(d.temp, time),
+        name: d.id,
+        region: d.icuType,
+        icuType: d.icuType,
+        death: d.inHopsitalDeath,
+        class: d.inHopsitalDeath * 4 + d.icuType,
+		population: interpolateValues(d.temp, time),
         income: interpolateValues(d.nimap, time),
         lifeExpectancy: interpolateValues(d.hr, time)
       };
